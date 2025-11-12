@@ -1,0 +1,314 @@
+:root {
+  --bg: #0b1220;
+  --accent: #00f7ff;
+  --panel: #0f172a;
+  --bot: #111827;
+  --user: #0b84ff;
+  --text: #eaf2ff;
+}
+
+/* Reset button look */
+.ai-toggle {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(0,247,255,0.1), rgba(10,10,10,0.2));
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  cursor: pointer;
+  z-index: 9999;
+}
+.ai-toggle.open { transform: scale(0.98); }
+.ai-icon { width: 44px; height: 44px; object-fit: contain; }
+
+/* Sidebar anchored to right */
+.sidebar {
+  position: fixed;
+  right: -420px; /* hidden by default */
+  width: 500px;
+  margin-left: 60%;
+  margin-top: -80px;
+  height: calc(100vh - 96px);
+  background: #F9F8F6;
+  border-left: 3px solid rgba(0, 247, 255, 0.06);
+  border-radius: 12px 0 0 12px;
+  box-shadow: -8px 20px 60px rgba(0, 0, 0, 0.6);
+  color: var(--text);
+  overflow: hidden;
+  transition: right 0.36s cubic-bezier(.2, .9, .2, 1);
+  z-index: 1050;
+}
+
+/* ✅ Tablet screens (up to 1024px) */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 400px;
+    margin-left: 0;
+    margin-top: 0;
+    height: 100vh;
+  }
+}
+
+.counsellor-tooltip {
+  position: absolute;         /* relative to .ai-toggle (works because .ai-toggle is fixed) */
+  bottom: calc(100% + 12px);  /* 12px gap above the button */
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: #fff;
+  color: #222;
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease, transform .28s ease;
+}
+
+/* ✅ Mobile screens (up to 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    right: -100%; /* fully hidden on small screens */
+    margin-left: 0;
+    margin-top: 0;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* ✅ When sidebar is active/open */
+.sidebar.active {
+  right: 0;
+}
+
+.sidebar.open { right: 20px; }
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid orange;
+  background-color: white;
+}
+.sidebar-header h3 { margin: 0; color: var(--accent); font-size: 1.1rem; border-bottom: 1px solid orange;}
+.sidebar-header small { color: var(--text); opacity: 0.7; }
+.header-actions .minimize { background: transparent; border: none; color: var(--text); font-size: 1.1rem; cursor: pointer; }
+
+.chat-area {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: White;
+  height: calc(100% - 120px);
+  overflow-y: auto;
+
+}
+.empty-state { color: rgba(234,242,255,0.7); padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.02); }
+
+.chat-bubble { padding: 10px 14px; border-radius: 14px; max-width: 82%; line-height: 1.4; font-size: 0.95rem; }
+.chat-bubble.bot { align-self: flex-start; background: #C9B59C; color: rgba(220,235,255,0.95); }
+.chat-bubble.user { align-self: flex-end; background: linear-gradient(90deg,#0b84ff,#0066ff); color: white; }
+
+.actions { display:flex; gap:10px; padding: 8px 2px; justify-content: space-between; }
+.actions button { flex:1; background: transparent; border: 1px solid black; color: Black; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600; }
+.actions button:hover { background: rgba(255,255,255,0.03); }
+
+.sidebar-footer { display:flex; gap:8px; padding: 12px; border-top: 1px solid Orange; background: #F9F8F6; }
+.sidebar-footer input { flex:1; padding: 10px; border-radius: 10px; border: 1px solid Orange;  color: Black; outline: none; }
+.send-btn { padding: 10px 14px; border-radius: 10px; border: 1px solid orange; background: linear-gradient(90deg, #F4F4F4); color: Black; font-weight:700; cursor:pointer; }
+.send-btn:disabled { opacity: 0.6; cursor: not-allowed;  }
+
+.wizard { padding: 16px; background: rgba(255,255,255,0.02); border: 0.1vmin solid white;border-radius: 10px; }
+.wizard-step input { width:100%; padding:12px; margin-bottom:10px; margin-top: 3px; border-radius:8px; border: 0.2px solid Black; background: rgba(255,255,255,0.02); }
+.wizard-controls { display:flex; justify-content:space-between; }
+.wizard-controls button { padding:8px 10px; border-radius:8px; border:none; cursor:pointer; }
+
+/* small screens */
+@media (max-width: 720px) {
+  .sidebar { width: 100%; right: -100%; border-radius: 0; top: 0; height: 100vh; }
+  .sidebar.open { right: 0; }
+  .ai-toggle { right: 16px; bottom: 16px; }
+}
+.error-msg {
+  background: rgba(255, 77, 79, 0.1);
+  color: #ff4d4f;
+  border-left: 3px solid #ff4d4f;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+
+
+    /* 🎯 Universal Input & Select Styling */
+    select,
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin: 8px 0 20px 0;
+      border: 1px solid #d1d1d1;
+      border-radius: 10px;
+      font-size: 15px;
+      background-color: #fff;
+      color: #333;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* ✨ Focus / Hover effects for smooth interaction */
+    select:focus,
+    input:focus {
+      outline: none;
+      border-color: #ff6a00;
+      box-shadow: 0 0 4px rgba(255, 106, 0, 0.4);
+      background-color: #fffaf5;
+    }
+
+    select:hover,
+    input:hover {
+      border-color: #ff6a00;
+    }
+
+    /* 🚫 Disabled state */
+    select:disabled,
+    input:disabled {
+      background-color: #f9f8f6;
+      color: Black;
+      cursor: not-allowed;
+    }
+
+    /* 🧩 Wizard Step Container */
+    .wizard-step {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 25px 30px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      margin-top: 15px;
+      transition: transform 0.3s ease;
+      color: Black;
+    }
+
+    .wizard-step:hover {
+      transform: translateY(-2px);
+    }
+
+    /* 🏷️ Labels */
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      color: Black;
+    }
+
+    /* 🧠 Section Headers */
+    .wizard-step h4 {
+      font-size: 18px;
+      color: Black;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #ff6a00;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    /* 🧭 Navigation Buttons */
+    .wizard-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .wizard-controls button {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff6a00, #ff8e00);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .wizard-controls button:hover {
+      background: linear-gradient(90deg, #ff8e00, #ff6a00);
+      box-shadow: 0 2px 8px rgba(255, 106, 0, 0.4);
+    }
+
+    .wizard-controls button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* 🚨 Error Message */
+    .error-msg {
+      background: #ffe6e6;
+      color: #b50000;
+      border: 1px solid #ffcccc;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* 🧩 React Select Styling (searchable dropdowns) */
+    .react-select__control {
+      border-radius: 10px !important;
+      border: 1px solid #d1d1d1 !important;
+      background-color: #fff !important;
+      box-shadow: none !important;
+      transition: all 0.25s ease;
+    }
+
+    .react-select__control--is-focused {
+      border-color: #ff6a00 !important;
+      box-shadow: 0 0 4px rgba(255, 106, 0, 0.4) !important;
+    }
+
+    .react-select__option--is-focused {
+      background-color: #fff6ef !important;
+      color: #222 !important;
+    }
+
+    .react-select__option--is-selected {
+      background-color: #ff8e00 !important;
+      color: #fff !important;
+    }
+
+    .react-select__menu {
+      z-index: 9999;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* 📱 Responsive Design */
+    @media (max-width: 600px) {
+      .wizard-step {
+        padding: 20px;
+      }
+
+      .wizard-controls {
+        flex-direction: column;
+      }
+
+      .wizard-controls button {
+        width: 100%;
+      }
+    }
+
+
+
