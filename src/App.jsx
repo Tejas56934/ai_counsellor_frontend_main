@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from './components/sidebar.jsx';
+import Sidebar from './components/sidebar';
 import AdmissionWizard from "./components/AdmissionWizard";
 
 
