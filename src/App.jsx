@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Sidebar from "./components/sidebar.jsx";
 import ContactActions from "./components/ContactUs.jsx";
-import AdmissionWizard from "./components/AdmissionWizard.jsx";
+import AdmissionWizard from "./components/admissionWizard.jsx";
 
 // Temporary Home component (replace with your real homepage)
 function Home() {
