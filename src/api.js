@@ -15,11 +15,16 @@ api.interceptors.response.use(
   }
 );
 
-// -------------------
-// AI Chat Endpoint
-// -------------------
-export async function askChat(message, context = 'Home') {
-  const payload = { message, context };
+export async function askChat(formData) {
+  const payload = {
+    fullName: formData.fullName,
+    email: formData.email,
+    mobileNo: formData.mobileNo || null,
+    subject: formData.subject,
+    message: formData.message,
+    context: formData.context
+  };
+
   const resp = await api.post('/chat/ask', payload);
   return resp.data;
 }

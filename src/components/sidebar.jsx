@@ -3,6 +3,8 @@ import { askChat, submitAdmission } from "../api";
 import Select from "react-select";
 import { locationData } from "./locationData";
 import Logo from "../assets/Logo.png"
+import {useNavigate} from 'react-router-dom';
+import ContactActions from "./ContactUs";
 
 // AI Icon
 const CounsellorImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%2300f7ff'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='%23000' font-size='50' font-weight='bold'%3E🤖%3C/text%3E%3C/svg%3E"
@@ -464,14 +466,14 @@ export default function Sidebar() {
       }
     }, 800);
   };
-
+const navigate = useNavigate();
   const handleEnquiry = (type) => {
     if (type === 'admission') {
       setShowWizard(true);
       setMessages([]);
       setShowPostSubmit(false);
     } else {
-      addMessage("Thank you for your enquiry! Our team will get back to you soon.");
+      window.open("/ContactUs", "_blank")
     }
   };
 
@@ -1246,12 +1248,14 @@ export default function Sidebar() {
 
           {!showWizard && !showPostSubmit && (
             <div className="actions">
+                <button className="primary" onClick={() => handleEnquiry('admission')}>
+                    <span>New Admission Enquiry</span>
+                </button>
               <button onClick={() => handleEnquiry('other')}>
-                <span>Any Other Enquiry</span>
+                <span>Contact Us</span>
               </button>
-              <button className="primary" onClick={() => handleEnquiry('admission')}>
-                <span>New Admission Enquiry</span>
-              </button>
+
+
             </div>
           )}
 
