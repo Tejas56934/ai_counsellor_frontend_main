@@ -19,7 +19,7 @@ export default function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/ContactUs" element={<ContactActions />} />
+            <Route path="/contact" element={<ContactActions />} />
             <Route path="/admission-wizard" element={<AdmissionWizard />} />
           </Routes>
         </main>

@@ -473,7 +473,7 @@ const navigate = useNavigate();
       setMessages([]);
       setShowPostSubmit(false);
     } else {
-      window.open("/ContactUs", "_blank")
+      navigate("/contact")
     }
   };
 
